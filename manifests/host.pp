@@ -16,9 +16,15 @@ define hosts::host(
     $_aliases = $aliases
   }
   
+  $_ip = String($ip, {
+    String => {
+      format => "%-24s"
+    }
+  })
+  
   concat::fragment { "hosts:host:${name}":
     target  => $::hosts::target,
-    content => "${ip} ${_aliases}",
+    content => "${_ip}${_aliases}",
     order => '01'
   }
 }
