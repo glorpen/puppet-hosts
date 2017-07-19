@@ -5,16 +5,17 @@ class hosts(
 ){
   concat { $target:
     ensure => present,
+    ensure_newline => true 
   }
   
-  concat::fragment { "hosts::header":
+  concat::fragment { "hosts:header":
     target => $target,
     order => '00',
-    content => "\
-# HEADER: This file is managed by puppet \
-# HEADER: While it can still be managed manually, it\
+    content => @("HEADER"/L)
+# HEADER: This file is managed by puppet
+# HEADER: While it can still be managed manually, it
 # HEADER: is definitely not recommended.
-"
+    | HEADER
   }
   
   if $enable_defaults {
