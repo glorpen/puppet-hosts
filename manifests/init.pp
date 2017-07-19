@@ -27,7 +27,7 @@ class hosts(
     
     hosts::host {'ip6-localhost':
       ip => '::1',
-      aliases => ['ip6-localhost', 'ip6-loopback']
+      aliases => ['localhost6.localdomain6', 'localhost6', 'ip6-localhost', 'ip6-loopback']
     }
     hosts::host { 'ip6-localnet': ip => 'fe00::0'}
     hosts::host { 'ip6-mcastprefix': ip => 'ff00::0'}
