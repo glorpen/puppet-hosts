@@ -7,7 +7,23 @@ class hosts(
     ensure => present,
   }
   
+  concat::fragment { "hosts::header":
+    target => $target,
+    order => '00',
+    content => "\
+# HEADER: This file is managed by puppet \
+# HEADER: While it can still be managed manually, it\
+# HEADER: is definitely not recommended.
+"
+  }
+  
   if $enable_defaults {
+    
+    hosts::host { 'localhost':
+      ip => '127.0.0.1',
+      aliases => ['localhost.localdomain', 'localhost', 'localhost4', 'localhost4.localdomain4']
+    }
+    
     hosts::host {'ip6-localhost':
       ip => '::1',
       aliases => ['ip6-localhost', 'ip6-loopback']

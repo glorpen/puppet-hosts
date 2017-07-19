@@ -19,5 +19,6 @@ define hosts::host(
   concat::fragment { "g_hosts::${name}":
     target  => $::g_hosts::target,
     content => "${ip} ${aliases}",
+    order => '01'
   }
 }
