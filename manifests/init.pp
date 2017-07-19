@@ -1,7 +1,8 @@
 class hosts(
   String $target = '/etc/hosts',
   Boolean $enable_defaults = true,
-  Boolean $enable_fqdn_entry = true
+  Boolean $enable_fqdn_entry = true,
+  Array $hosts = []
 ){
   concat { $target:
     ensure => present,
@@ -34,5 +35,11 @@ class hosts(
     hosts::host { 'ip6-allnodes': ip => 'ff02::1'}
     hosts::host { 'ip6-allrouters': ip => 'ff02::2'}
     hosts::host { 'ip6-allhosts': ip => 'ff02::3'}
+  }
+  
+  $hosts.each | $index, $conf | {
+    hosts::host { "hosts:auto-host:${index}":
+      * => $conf
+    }
   }
 }
