@@ -1,0 +1,14 @@
+{
+  "name": "glorpen-hosts",
+  "version": "1.0.0",
+  "summary": "Puppet module for hosts configuration",
+  "author": "Arkadiusz Dzięgiel",
+  "dependencies": [
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">=4.0.0"
+    }
+  ],
+  "license": "GPL",
+  "source": "ssh://git@puppet.glorpen.eu/modules/hosts.git"
+}
