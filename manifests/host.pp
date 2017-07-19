@@ -1,6 +1,6 @@
 define hosts::host(
   String $ip,
-  $aliases
+  $aliases = $name
 ){
   include ::hosts
   
