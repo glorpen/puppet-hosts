@@ -1,10 +1,10 @@
 define hosts::host(
   String $ip,
-  $aliases = $name
+  Variant[String, Array] $aliases = $name
 ){
   include ::hosts
   
-  if $aliases ~= Array {
+  if $aliases =~ Array {
     $_aliases = String($aliases, {
       Array=>{
         separator => "",
