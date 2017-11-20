@@ -1,7 +1,6 @@
 class hosts(
   String $target = '/etc/hosts',
   Boolean $enable_defaults = true,
-  Boolean $enable_fqdn_entry = true,
   Array $hosts = []
 ){
   concat { $target:
