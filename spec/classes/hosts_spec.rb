@@ -16,15 +16,15 @@ describe 'hosts' do
     it { is_expected.not_to contain_hosts__host('ip6-localhost') }
   end
   context 'with additional hosts' do
-    let(:params) {
+    let(:params) do
       {
         'enable_defaults' => false,
         'hosts' => [
-          {'ip': '192.168.0.1', 'aliases': ['alias1']},
-          {'ip': '192.168.0.2', 'aliases': ['alias2']}
-        ]
+          { 'ip' => '192.168.0.1', 'aliases' => ['alias1'] },
+          { 'ip' => '192.168.0.2', 'aliases' => ['alias2'] },
+        ],
       }
-    }
+    end
 
     it { is_expected.to have_hosts__host_resource_count(2) }
 

@@ -7,28 +7,31 @@ describe 'hosts::host' do
     ('%-24s' % ip) + [aliases].flatten.join(' ')
   end
 
-  context "with no alias" do
+  context 'with no alias' do
     let(:params) { { 'ip' => '192.168.0.1' } }
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1','example-host')) }
+
+    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'example-host')) }
   end
 
-  context "with alias as string" do
-    let(:params) {
+  context 'with alias as string' do
+    let(:params) do
       {
         'ip' => '192.168.0.1',
-        'aliases' => 'localalias'
+        'aliases' => 'localalias',
       }
-    }
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1','localalias')) }
+    end
+
+    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'localalias')) }
   end
 
-  context "with alias as list" do
-    let(:params) {
+  context 'with alias as list' do
+    let(:params) do
       {
         'ip' => '192.168.0.1',
-        'aliases' => ['a0', 'a1']
+        'aliases' => %w[a0 a1],
       }
-    }
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', ['a0', 'a1'])) }
+    end
+
+    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', %w[a0 a1])) }
   end
 end
