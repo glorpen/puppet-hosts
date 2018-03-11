@@ -1,14 +1,49 @@
 {
   "name": "glorpen-hosts",
   "version": "1.0.0",
-  "summary": "Puppet module for hosts configuration",
   "author": "Arkadiusz Dzięgiel",
+  "summary": "Puppet module for hosts configuration",
+  "license": "GPL-3.0+",
+  "source": "https://github.com/glorpen/puppet-hosts.git",
   "dependencies": [
     {
       "name": "puppetlabs/concat",
       "version_requirement": ">=4.0.0"
     }
   ],
-  "license": "GPL",
-  "source": "ssh://git@puppet.glorpen.eu/modules/hosts.git"
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04"
+      ]
+    },
+    {
+      "operatingsystem": "windows",
+      "operatingsystemrelease": [
+        "2012 R2"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "pdk-version": "1.4.1",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.4.1-0-g52adbbb"
 }
