@@ -7,7 +7,7 @@ define hosts::host(
   if $aliases =~ Array {
     $_aliases = String($aliases, {
       Array=>{
-        separator => '',
+        separator => ' ',
         format => '% s',
         string_formats => {String=>'%s'}
       }
