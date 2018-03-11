@@ -5,13 +5,13 @@ define hosts::host(
   include ::hosts
 
   if $aliases =~ Array {
-    $_aliases = String($aliases, {
+    $_aliases = regsubst(String($aliases, {
       Array=>{
         separator => ' ',
         format => '% s',
         string_formats => {String=>'%s'}
       }
-    })
+    }), ' {2,}', ' ')
   } else {
     $_aliases = $aliases
   }
