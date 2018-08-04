@@ -1,37 +1,80 @@
 require 'spec_helper'
 
 describe 'hosts::host' do
-  let(:title) { 'example-host' }
-
   def host_entry(ip, aliases)
-    ('%-24s' % ip) + [aliases].flatten.join(' ')
+    padding = (ip.length / 12.0).ceil * 12 + 1
+    ("%-#{padding}s" % ip) + [aliases].flatten.join(' ')
   end
 
-  context 'with no alias' do
-    let(:params) { { 'ip' => '192.168.0.1' } }
+  let(:title) { 'example-host' }
+  let(:facts) { {} }
 
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'example-host')) }
-  end
+  describe 'on linux' do
+    context 'with no alias' do
+      let(:params) { { 'ip' => '192.168.0.1' } }
 
-  context 'with alias as string' do
-    let(:params) do
-      {
-        'ip' => '192.168.0.1',
-        'aliases' => 'localalias',
-      }
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'example-host')) }
     end
 
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'localalias')) }
-  end
+    context 'with alias as string' do
+      let(:params) do
+        {
+          'ip' => '192.168.0.1',
+          'aliases' => 'localalias',
+        }
+      end
 
-  context 'with alias as list' do
-    let(:params) do
-      {
-        'ip' => '192.168.0.1',
-        'aliases' => ['a0', 'a1'],
-      }
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', 'localalias')) }
     end
 
-    it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', ['a0', 'a1'])) }
+    context 'with alias as list' do
+      let(:params) do
+        {
+          'ip' => '192.168.0.1',
+          'aliases' => ['a0', 'a1'],
+        }
+      end
+
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('192.168.0.1', ['a0', 'a1'])) }
+    end
+
+    context 'with long padded ip' do
+      let(:params) do
+        {
+          'ip' => '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+          'aliases' => ['long-ip'],
+        }
+      end
+
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host').with_content(host_entry('2001:0db8:85a3:0000:0000:8a2e:0370:7334', ['long-ip'])) }
+    end
+  end
+
+  describe 'on windows' do
+    let(:facts) do
+      super().merge(
+        os: {
+          'family' => 'windows',
+        },
+      )
+    end
+
+    context 'with multiple aliases' do
+      let(:params) do
+        {
+          'ip' => '192.168.0.1',
+          'aliases' => ['a0', 'a1'],
+        }
+      end
+
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host:a0').with_content(host_entry('192.168.0.1', ['a0'])) }
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host:a1').with_content(host_entry('192.168.0.1', ['a1'])) }
+    end
+
+    context 'with no alias' do
+      let(:params) { { 'ip' => '192.168.0.1' } }
+
+      it { is_expected.to contain_concat__fragment('hosts:host:example-host:example-host').with_content(host_entry('192.168.0.1', 'example-host')) }
+    end
   end
 end
