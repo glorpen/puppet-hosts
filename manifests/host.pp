@@ -24,7 +24,7 @@ define hosts::host(
       [
         "hosts:host:${name}:${alias}",
         {
-          'target'  => $::hosts::target,
+          'target'  => $::hosts::target_alias,
           'content' => "${_ip}${alias}"
         }
       ]
@@ -45,7 +45,7 @@ define hosts::host(
 
     $config = {
       "hosts:host:${name}" => {
-        'target'  => $::hosts::target,
+        'target'  => $::hosts::target_alias,
         'content' => "${_ip}${_aliases}",
       }
     }

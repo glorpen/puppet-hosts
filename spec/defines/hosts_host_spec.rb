@@ -55,6 +55,9 @@ describe 'hosts::host' do
       super().merge(
         os: {
           'family' => 'windows',
+          'windows' => {
+            'system32' => 'C:\Windows\system32',
+          },
         },
       )
     end

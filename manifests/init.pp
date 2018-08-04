@@ -1,11 +1,13 @@
 class hosts(
-  String $target = '/etc/hosts',
+  String $target = ::hosts::get_default_hosts_path(),
   Boolean $enable_defaults = true,
   Array[Hash] $hosts = []
 ){
-  concat { $target:
+  $target_alias = '::hosts:hosts'
+  concat { $target_alias:
     ensure         => present,
-    ensure_newline => true
+    ensure_newline => true,
+    path           => $target
   }
 
   $_header = "# HEADER: This file is managed by puppet\n\
@@ -13,7 +15,7 @@ class hosts(
 # HEADER: is definitely not recommended.\n"
 
   concat::fragment { 'hosts:header':
-    target  => $target,
+    target  => '::hosts:hosts',
     order   => '00',
     content => $_header
   }
