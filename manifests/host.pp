@@ -3,6 +3,7 @@ define hosts::host(
   Variant[String, Array] $aliases = $name
 ){
   include ::hosts
+  include ::stdlib
 
   # IPv6 addresses can be long
   $padding = ceiling(length($ip) / 12.0) * 12 + 1
