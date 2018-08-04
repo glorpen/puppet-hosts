@@ -38,5 +38,5 @@ test_script:
   - gem -v
   - bundle -v
   - bundle exec rake %CHECK%
-  - pwsh ci\run.ps
+  - pwsh ci\run.ps1
   - bundle exec rake spec_clean spec_clean_symlinks

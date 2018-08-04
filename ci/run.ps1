@@ -6,7 +6,7 @@ if ( $env:FUNCTIONAL -eq "yes" ) {
     
     Write-host "Will run: '$puppet_code'"
     
-    bundle exec puppet apply --test --modulepath=$path\spec\fixtures\modules -e $puppet_code
+    bundle exec puppet apply --verbose --modulepath=$path\spec\fixtures\modules -e $puppet_code
     $line = Get-Content hosts.txt | Where-Object { $_.Contains("local-test") }
     if ( $line -match "127.0.0.100\s+local-test" ) {
         Write-Output "OK"
