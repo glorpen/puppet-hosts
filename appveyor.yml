@@ -18,11 +18,13 @@ environment:
     -
       PUPPET_GEM_VERSION: ~> 5.0
       RUBY_VERSION: 24
-      CHECK: parallel_spec
+      CHECK: spec_prep parallel_spec_standalone
+      FUNCTIONAL: yes
     -
       PUPPET_GEM_VERSION: ~> 5.0
       RUBY_VERSION: 24-x64
-      CHECK: parallel_spec
+      CHECK: spec_prep parallel_spec_standalone
+      FUNCTIONAL: yes
 matrix:
   fast_finish: true
 install:
@@ -35,5 +37,6 @@ test_script:
   - ruby -v
   - gem -v
   - bundle -v
-  - docker -v
   - bundle exec rake %CHECK%
+  - pwsh ci\run.ps
+  - bundle exec rake spec_clean spec_clean_symlinks
