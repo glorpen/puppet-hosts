@@ -1,6 +1,6 @@
 {
   "name": "glorpen-hosts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Arkadiusz Dzięgiel",
   "summary": "Puppet module for hosts configuration",
   "license": "GPL-3.0+",
